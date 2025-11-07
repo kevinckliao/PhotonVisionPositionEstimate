@@ -11,7 +11,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.networktables.*;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,6 +20,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
 import edu.wpi.first.math.geometry.*;
+
+// Display to 2D - Adv.Scope
+import edu.wpi.first.math.geometry.Pose2d;
+//import edu.wpi.first.math.geometry.Rotation2d;
 
 /**
  * This is a demo program showing the use of the DifferentialDrive class. Runs the motors with
@@ -70,7 +74,7 @@ public class Robot extends TimedRobot {
 
       // --- Field visualization setup ---
       field = new Field2d();
-      edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putData("Field", field);
+      SmartDashboard.putData("Field", field);
 
       System.out.println("✅ PhotonVision + Field2d initialized.");
     }
