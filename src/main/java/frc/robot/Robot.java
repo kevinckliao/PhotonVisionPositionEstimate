@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
         int count = result.getTargets().size();
         //System.out.printf("📸 %d targets detected%n", count);
 
-        // --- Print info for each detected tag ---
+        //--- Print info for each detected tag ---
         for (PhotonTrackedTarget t : result.getTargets()) {
             Transform3d camToTarget = t.getBestCameraToTarget();
             Translation3d tr = camToTarget.getTranslation();
@@ -111,11 +111,11 @@ public class Robot extends TimedRobot {
                 pvTransform.getRotation()
             );
 
-            System.out.printf(
-                "🤖 Fused Pose → X=%.2f  Y=%.2f  Z=%.2f  Heading=%.1f°%n",
-                pvPose.getX(), pvPose.getY(), pvPose.getZ(),
-                pvPose.getRotation().toRotation2d().getDegrees()
-            );
+            // System.out.printf(
+            //     "🤖 Fused Pose → X=%.2f  Y=%.2f  Z=%.2f  Heading=%.1f°%n",
+            //     pvPose.getX(), pvPose.getY(), pvPose.getZ(),
+            //     pvPose.getRotation().toRotation2d().getDegrees()
+            // );
 
             // Update NetworkTable publishers
             xPub.set(pvPose.getX());
