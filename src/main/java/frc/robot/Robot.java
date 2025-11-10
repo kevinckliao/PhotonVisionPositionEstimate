@@ -8,7 +8,7 @@ import org.photonvision.PhotonCamera;
 //import org.photonvision.PhotonPoseEstimator;
 //import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
-import org.photonvision.targeting.PhotonTrackedTarget;
+//import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,9 +30,6 @@ import edu.wpi.first.math.geometry.Pose2d;
  * arcade steering.
  */
 public class Robot extends TimedRobot {
-  // Publishers created once
-  private BooleanPublisher hasTargetPub;
-  private DoublePublisher xPub, yPub, headingPub;
   // Motors
   private final PWMSparkMax m_leftMotor = new PWMSparkMax(0);
   private final PWMSparkMax m_rightMotor = new PWMSparkMax(1);
@@ -66,16 +63,9 @@ public class Robot extends TimedRobot {
       camera = new PhotonCamera("Razer_Kiyo_X");
       visionTable = inst.getTable("VisionPose");
 
-      // Create publishers only once
-      hasTargetPub = visionTable.getBooleanTopic("hasTarget").publish();
-      xPub = visionTable.getDoubleTopic("xMeters").publish();
-      yPub = visionTable.getDoubleTopic("yMeters").publish();
-      headingPub = visionTable.getDoubleTopic("headingDeg").publish();
-
       // --- Field visualization setup ---
       field = new Field2d();
       SmartDashboard.putData("Field", field);
-
       System.out.println("✅ PhotonVision + Field2d initialized.");
     }
 
@@ -88,16 +78,15 @@ public class Robot extends TimedRobot {
 
     PhotonPipelineResult result = camera.getLatestResult();
       // ✅ Publish whether any targets exist
-      hasTargetPub.set(result.hasTargets());
 
       if (result.hasTargets()) {
-        int count = result.getTargets().size();
+        //int count = result.getTargets().size();
         //System.out.printf("📸 %d targets detected%n", count);
 
         //--- Print info for each detected tag ---
-        for (PhotonTrackedTarget t : result.getTargets()) {
-            Transform3d camToTarget = t.getBestCameraToTarget();
-            Translation3d tr = camToTarget.getTranslation();
+        //for (PhotonTrackedTarget t : result.getTargets()) {
+            //Transform3d camToTarget = t.getBestCameraToTarget();
+            //Translation3d tr = camToTarget.getTranslation();
 
             // System.out.printf(
             //     "  ▶ ID: %d  X=%.2f  Y=%.2f  Z=%.2f  Amb=%.3f%n",
@@ -105,7 +94,7 @@ public class Robot extends TimedRobot {
             //     tr.getX(), tr.getY(), tr.getZ(),
             //     t.getPoseAmbiguity()
             // );
-        }
+        //}
 
         // --- If PhotonVision produced a fused multi-tag pose ---
         if (result.getMultiTagResult().isPresent()) {
@@ -120,11 +109,6 @@ public class Robot extends TimedRobot {
             //     pvPose.getX(), pvPose.getY(), pvPose.getZ(),
             //     pvPose.getRotation().toRotation2d().getDegrees()
             // );
-
-            // Update NetworkTable publishers
-            xPub.set(pvPose.getX());
-            yPub.set(pvPose.getY());
-            headingPub.set(pvPose.getRotation().toRotation2d().getDegrees());
 
             // Update field visualization
             field.setRobotPose(pvPose.toPose2d());
